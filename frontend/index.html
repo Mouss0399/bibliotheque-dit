@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque DIT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>📚 Bibliothèque Numérique DIT</h1>
+        <nav>
+            <button onclick="showSection('livres')">Livres</button>
+            <button onclick="showSection('utilisateurs')">Utilisateurs</button>
+            <button onclick="showSection('emprunts')">Emprunts</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section Livres -->
+        <section id="livres" class="section">
+            <h2>Gestion des Livres</h2>
+            <div class="form-container">
+                <input type="text" id="titre" placeholder="Titre">
+                <input type="text" id="auteur" placeholder="Auteur">
+                <input type="text" id="isbn" placeholder="ISBN">
+                <button onclick="addLivre()">Ajouter</button>
+            </div>
+            <div class="search-container">
+                <input type="text" id="recherche" placeholder="Rechercher...">
+                <button onclick="rechercherLivre()">Rechercher</button>
+            </div>
+            <div id="liste-livres"></div>
+        </section>
+
+        <!-- Section Utilisateurs -->
+        <section id="utilisateurs" class="section" style="display:none">
+            <h2>Gestion des Utilisateurs</h2>
+            <div class="form-container">
+                <input type="text" id="nom" placeholder="Nom">
+                <input type="text" id="prenom" placeholder="Prénom">
+                <input type="text" id="email" placeholder="Email">
+                <select id="type_utilisateur">
+                    <option value="Etudiant">Étudiant</option>
+                    <option value="Professeur">Professeur</option>
+                    <option value="Personnel">Personnel administratif</option>
+                </select>
+                <button onclick="addUtilisateur()">Ajouter</button>
+            </div>
+            <div id="liste-utilisateurs"></div>
+        </section>
+
+        <!-- Section Emprunts -->
+        <section id="emprunts" class="section" style="display:none">
+            <h2>Gestion des Emprunts</h2>
+            <div class="form-container">
+                <input type="number" id="livre_id" placeholder="ID du livre">
+                <input type="number" id="utilisateur_id" placeholder="ID de l'utilisateur">
+                <input type="datetime-local" id="date_retour_prevue">
+                <button onclick="emprunter()">Emprunter</button>
+            </div>
+            <div id="liste-emprunts"></div>
+            <h3>⚠️ Retards</h3>
+            <div id="liste-retards"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
