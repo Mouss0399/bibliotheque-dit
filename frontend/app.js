@@ -119,7 +119,7 @@ async function getEmprunts() {
             <div class="card-info">
                 Livre #${e.livre_id} — Utilisateur #${e.utilisateur_id} 
                 — Retour prévu : ${new Date(e.date_retour_prevue).toLocaleDateString()}
-                ${e.date_retour_effective ? '✅ Retourné' : '🔄 En cours'}
+                ${e.date_retour_effective ? ' Retourné' : ' En cours'}
             </div>
             <div class="card-actions">
                 ${!e.date_retour_effective ? 
@@ -155,7 +155,7 @@ async function getRetards() {
     const res = await fetch(`${API_EMPRUNTS}/emprunts/retards`);
     const retards = await res.json();
     const liste = document.getElementById('liste-retards');
-    liste.innerHTML = retards.length === 0 ? '<p>Aucun retard ✅</p>' : retards.map(e => `
+    liste.innerHTML = retards.length === 0 ? '<p>Aucun retard </p>' : retards.map(e => `
         <div class="card">
             <div class="card-info">
                 Livre #${e.livre_id} — Utilisateur #${e.utilisateur_id} 
