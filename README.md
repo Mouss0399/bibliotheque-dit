@@ -12,7 +12,7 @@ L'application est basée sur une architecture microservices :
 - **Frontend** (port 3000) — Interface web
 - **PostgreSQL** (port 5432) — Base de données
 
-## 🛠️ Technologies utilisées
+##  Technologies utilisées
 
 - **Backend** : FastAPI (Python)
 - **Frontend** : HTML / CSS / JavaScript
