@@ -50,7 +50,7 @@ docker compose up -d
 docker compose down
 ```
 
-## 🔄 Pipeline Jenkins
+##  Pipeline Jenkins
 
 1. Créer un nouveau job Jenkins de type **Pipeline**
 2. Configurer le repo GitHub dans la section **Pipeline**
@@ -59,8 +59,8 @@ docker compose down
    - Construire les images Docker
    - Déployer avec Docker Compose
 
-## 📁 Structure du projet
-## 👥 Équipe
+##  Structure du projet
+##  Équipe
 
 | Nom | Rôle |
 |-----|------|
