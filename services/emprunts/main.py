@@ -1,10 +1,19 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from datetime import datetime
 from models import Emprunt, SessionLocal, engine, Base
 
 app = FastAPI()
+
+# Autoriser les appels depuis le frontend (autre origine)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Créer les tables au démarrage
 Base.metadata.create_all(bind=engine)
