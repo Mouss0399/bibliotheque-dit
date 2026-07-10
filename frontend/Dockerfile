@@ -1,18 +1,21 @@
-# Étape 1 : build de l'application React avec Vite
-FROM node:20-alpine AS build
+# Étape 1 — Builder l'application React
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
+# Installer les dépendances
+COPY package*.json .
 RUN npm install
 
+# Copier le code et builder
 COPY . .
 RUN npm run build
 
-# Étape 2 : image finale, servie par Nginx
+# Étape 2 — Servir avec Nginx
 FROM nginx:alpine
 
-COPY --from=build /app/dist /usr/share/nginx/html
+# Copier le résultat du build dans Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
