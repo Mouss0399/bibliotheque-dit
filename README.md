@@ -15,7 +15,7 @@ L'application est basée sur une architecture microservices :
 ##  Technologies utilisées
 
 - **Backend** : FastAPI (Python)
-- **Frontend** : HTML / CSS / JavaScript
+- **Frontend** : React + Vite
 - **Base de données** : PostgreSQL
 - **Conteneurisation** : Docker + Docker Compose
 - **CI/CD** : Jenkins
@@ -23,8 +23,8 @@ L'application est basée sur une architecture microservices :
 ##  Installation et lancement
 
 ### Prérequis
-- Docker
-- Docker Compose
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (inclut Docker Compose)
+- Git
 
 ### Lancer le projet
 
@@ -34,12 +34,19 @@ git clone https://github.com/Mouss0399/bibliotheque-dit.git
 cd bibliotheque-dit
 ```
 
-2. Lancer tous les services :
+2. Construire les images et lancer tous les services :
 ```bash
-docker compose up -d
+docker compose up -d --build
 ```
+`--build` n'est nécessaire que la première fois ou après une modification du code ; ensuite `docker compose up -d` suffit. Le premier lancement peut prendre quelques minutes le temps de télécharger les images de base et d'installer les dépendances.
 
-3. Accéder à l'application :
+3. Vérifier que tout tourne :
+```bash
+docker ps
+```
+5 conteneurs doivent apparaître avec le statut `Up` : `frontend`, `livres`, `utilisateurs`, `emprunts`, `db`.
+
+4. Accéder à l'application :
 - Frontend : http://localhost:3000
 - API Livres : http://localhost:8000/docs
 - API Utilisateurs : http://localhost:8001/docs
@@ -49,6 +56,18 @@ docker compose up -d
 ```bash
 docker compose down
 ```
+Les données (livres, utilisateurs, emprunts) sont conservées dans un volume Docker et seront toujours là au prochain lancement. Pour tout réinitialiser : `docker compose down -v`.
+
+### Dépannage (Windows)
+Si Docker Desktop reste bloqué sur "Starting the Docker Engine...", c'est généralement WSL2 qui n'est pas correctement activé. En PowerShell **administrateur** :
+```powershell
+wsl --install --no-distribution
+```
+puis redémarrez. Si le problème persiste, toujours en admin :
+```powershell
+bcdedit /set hypervisorlaunchtype auto
+```
+et redémarrez à nouveau.
 
 ##  Pipeline Jenkins
 
@@ -60,6 +79,27 @@ docker compose down
    - Déployer avec Docker Compose
 
 ##  Structure du projet
+
+```
+bibliotheque-dit/
+├── docker-compose.yml        # Orchestration de tous les services
+├── Jenkinsfile                # Pipeline CI/CD
+├── frontend/                  # Application React (Vite)
+│   ├── src/
+│   │   ├── pages/             # Tableau de bord, Livres, Utilisateurs, Emprunts
+│   │   ├── components/        # Sidebar, modales, tableaux, icônes...
+│   │   └── api/                # Appels vers les 3 API backend
+│   └── Dockerfile
+├── services/
+│   ├── livres/                 # API FastAPI — gestion des livres
+│   ├── utilisateurs/           # API FastAPI — gestion des utilisateurs
+│   └── emprunts/               # API FastAPI — gestion des emprunts
+│       └── (chacun a son main.py, models.py, requirements.txt, Dockerfile)
+└── docs/                       # Rapport du projet
+```
+
+Chaque dossier sous `services/` est un microservice indépendant avec sa propre API REST, son propre `Dockerfile`, et communique avec les autres uniquement via HTTP (jamais d'appel direct en base entre services).
+
 ##  Équipe
 
 | Nom | Rôle |
