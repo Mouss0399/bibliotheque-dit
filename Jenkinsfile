@@ -17,6 +17,12 @@ pipeline {
             }
         }
 
+stage('Vérification') {
+    steps {
+        echo 'Vérification des conteneurs...'
+        sh 'docker compose ps'
+    }
+}
         stage('Déploiement') {
             steps {
                 echo 'Déploiement avec Docker Compose...'

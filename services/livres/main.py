@@ -13,6 +13,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# Health check
+@app.get("/health")
+def health():
+    return {"status": "ok", "service": "livres"}
 
 # Créer les tables au démarrage
 Base.metadata.create_all(bind=engine)
