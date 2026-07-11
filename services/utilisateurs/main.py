@@ -75,7 +75,7 @@ def update_utilisateur(id: int, utilisateur: UtilisateurSchema, db: Session = De
     existing.type_utilisateur = utilisateur.type_utilisateur
     db.commit()
     return existing
-
+ 
 # Supprimer un utilisateur
 @app.delete("/utilisateurs/{id}")
 def delete_utilisateur(id: int, db: Session = Depends(get_db)):
